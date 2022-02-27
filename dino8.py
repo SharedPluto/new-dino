@@ -22,12 +22,14 @@ last = 0
 total_time = 0
 
 # the intervals where the bot will search for obstacles
-y_search, x_start, x_end = 434, 410, 440
+y_search, x_start, x_end = 434, 410, 440 # trees
 y_search2 = 335 # for the birds
-y_search3 = 390
-y_search4 = 420
+y_search3 = 390 # any
+y_search4 = 420 # any
 
+# why sleep here tho but ok
 time.sleep(1)
+
 while True:
     t1 = time.time()
     if keyboard.is_pressed('q'): # Emergency Button
@@ -57,19 +59,25 @@ while True:
                     # then press the down key 
         # you can add more blocks life this for more obstacles
         # right now I have only added 1 obstacle can you please add the others 
+        
+        # found the bird at 
         if getPixel(sct_img,i,y_search2) != bgColor and getPixel(sct_img,i,y_search) == bgColor:
-             keyboard.press('down') #crouch
-        elif getPixel(sct_img,i,y_search) != bgColor and getPixel(sct_img,i,y_search2) == bgColor:
+             while getPixel(sct_img,i,y_search2) != bgColor:
+                    keyboard.press('down') #crouch
              keyboard.release('down')
-             keyboard.press(' ') #jump
+        elif getPixel(sct_img,i,y_search) != bgColor and getPixel(sct_img,i,y_search2) == bgColor:
+            while getPixel(sct_img,i,y_search) != bgColor:
+                 keyboard.press(' ') #jump
+            keyboard.release(' ')
         elif getPixel(sct_img,i,y_search3) != bgColor and getPixel(sct_img,i,y_search4) == bgColor:
-             keyboard.press(' ') #mid bird jump
+            while getPixel(sct_img,i,y_search3) != bgColor:
+                keyboard.press(' ') #mid bird jump
+            keyboard.release(' ')
         else:
-             
              break
-
-    t2 = time.time()-t1
-    total_time += t2
+    
+    # removed extra variable declaration
+    total_time += time.time() - t1
 
     # DEBUG
     print(x_end)
